@@ -1,0 +1,31 @@
+<% include ../header %>
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<script type="text/javascript">
+  var socket = io('http://localhost:3000');
+
+  // Emite que o usuário entrou na sala e manda em qual sala está.
+  socket.emit('join', '<%- sala %>');
+
+  // Escuta que ouve a quando o servidor manda uma mensagem.
+  socket.on('send-client', function(msg){
+    document.querySelector('#chat').innerHTML += "/" + msg;
+  });
+
+  // A variavel enviar recebe uma função que será executada quando
+  // um usuario clicar no button enviar.
+  var enviar = function() {
+    var msg = document.querySelector('#msg').value;
+    socket.emit('send-server', msg);
+  };
+
+</script>
+<header>
+  <h2>Ntalk - Chat</h2>
+</header>
+<section>
+  <pre id="chat"></pre>
+  <input type="text" id="msg" placeholder="Mensagem">
+  <button type="button" onclick="enviar();">Enviar</button>
+</section>
+<% include ../footer %>
+<% include ../exit %>

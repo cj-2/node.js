@@ -1,0 +1,15 @@
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<script type="text/javascript">
+  var socket = io('http://localhost:3000');
+
+  // Escuta do new-message
+  socket.on('new-message', function(data){
+
+    // Quando executado cria uma variável chat que captura o div correspondente.
+    var chat = document.getElementById('chat_' + data.email);
+
+    // E então muda o [ href="/chat" ] para o url da sala do usuario que está chamando.
+    chat.href = chat.href + '?sala=' + data.sala;
+
+  });
+</script>
